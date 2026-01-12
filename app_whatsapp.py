@@ -9,7 +9,10 @@ from AgnoTest.utils.logging import LOGGER
 LOGGER.info("Starting...")
 
 
-agent_os = AgentOSFactory().with_interface(WhatsappInterface()).build() # 3dna 2 functions f base_orchestrator (get_app) pour les app normales et with_interface pour les app avec interface (whatsapp)
+# AgentOS requires at least one of: agents/teams/workflows/knowledge bases.
+from AgnoTest.registry.teams import TEAMS
+
+agent_os = AgentOSFactory(teams=[TEAMS["review_contract"]]).with_interface(WhatsappInterface(team=TEAMS["review_contract"])).build() # 3dna 2 functions f base_orchestrator (get_app) pour les app normales et with_interface pour les app avec interface (whatsapp)
 
 if __name__ == "__main__":
     agent_os.serve(app="app_whatsapp:app", port=8000, reload=True)

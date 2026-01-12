@@ -12,3 +12,7 @@ class AgentBuildError(CoreError):
 
 class TeamBuildError(CoreError):
     """Raised when a Team cannot be constructed."""
+
+class OrchestratorError(CoreError):
+    """Raised for AgentOS/runtime orchestration issues."""
+

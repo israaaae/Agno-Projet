@@ -8,6 +8,8 @@ from agno.os.interfaces.base import BaseInterface as AgnoBaseInterface
 from ..core.base_interface import BaseInterface
 from ..utils.logging import LOGGER
 
+# had la class TelegramOSInterface drnaha 7it Agno n'a pas d'interface telegram officielle comme Whatsapp 
+# Donc on doit creer notre propre interface telegram
 
 class TelegramOSInterface(AgnoBaseInterface):
     type: str = "telegram"
@@ -72,6 +74,8 @@ class TelegramOSInterface(AgnoBaseInterface):
         self.router = router
         return router
 
+# Voila hadi hiya la class b7al lli kayna f whatsapp.py 
+# lfar9 juste que à la place de TelegramOSInterface il y a function whatsapp que Agno nous a fournit
 
 @dataclass
 class TelegramInterface(BaseInterface):

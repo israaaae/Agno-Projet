@@ -14,9 +14,9 @@ SRC = ROOT / "src"
 if SRC.exists() and str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from src.AgnoTest.core.base_orchestrator import AgentOSFactory  # noqa: E402
-from src.AgnoTest.interfaces.telegram import TelegramInterface  # noqa: E402
-from src.AgnoTest.registry.teams import TEAMS  # noqa: E402
+from src.AgnoProject.core.base_orchestrator import AgentOSFactory  # noqa: E402
+from src.AgnoProject.interfaces.telegram import TelegramInterface  # noqa: E402
+from src.AgnoProject.registry.teams import TEAMS  # noqa: E402
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")  # optional (fallback)

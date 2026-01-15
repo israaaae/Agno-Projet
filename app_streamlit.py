@@ -32,7 +32,7 @@ if not os.environ.get("OPENAI_API_KEY"):
 
 def get_team():
     # Import after key is set.
-    from AgnoTest.registry.teams import TEAMS
+    from AgnoProject.registry.teams import TEAMS
 
     return TEAMS["review_contract"]
 

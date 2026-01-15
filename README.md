@@ -1,4 +1,4 @@
-# AgnoTest — AI Contract Review System (Streamlit + Telegram + WhatsApp)
+# AI Contract Review System (Streamlit + Telegram + WhatsApp)
 
 Multi-agent contract review project built on **Agno AgentOS**.
 

@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Sequence
+from typing import Any, Sequence, Optional
 
 from agno.os import AgentOS
 from agno.os.interfaces.whatsapp import Whatsapp
@@ -26,6 +26,8 @@ class AgentOSFactory:
     tracing: bool = SETTINGS.ENABLE_TRACING
 
     extra: dict = field(default_factory=dict)
+    # Cache pour éviter les doubles builds
+    _built_os: Optional[AgentOS] = field(default=None, init=False, repr=False)
 
 
     def with_interface(self, interface: BaseInterface) -> "AgentOSFactory":
@@ -35,20 +37,24 @@ class AgentOSFactory:
 
 
     def build(self) -> AgentOS:
+        # Retourne le cache si déjà construit
+        if self._built_os is not None:
+            return self._built_os
         try:
-            kwargs = dict(
-                description=self.description,
-                agents=list(self.agents) if self.agents else None,
-                teams=list(self.teams) if self.teams else None,
-                interfaces=list(self.interfaces) if self.interfaces else None,
-                tracing=self.tracing,  # Enables traceability
-
-            )
-            kwargs = {k: v for k, v in kwargs.items() if v is not None}
+            kwargs = {
+                k: v for k, v in {
+                    "description": self.description,
+                    "agents": list(self.agents) or None,
+                    "teams": list(self.teams) or None,
+                    "interfaces": list(self.interfaces) or None,
+                    "tracing": self.tracing,
+                }.items() if v
+            }
             kwargs.update(self.extra)
-            os_obj = AgentOS(**kwargs)
+            
+            self._built_os = AgentOS(**kwargs)
             LOGGER.info("Built AgentOS OK")
-            return os_obj
+            return self._built_os
         except Exception as e:
             LOGGER.exception("Failed to build AgentOS", extra={"error": str(e)})
             raise OrchestratorError(f"Failed to build AgentOS: {e}") from e
